@@ -16,13 +16,44 @@ public interface DishService {
      */
     public void saveWithFlavor(DishDTO dishDTO);
 
+    /**
+     * 菜品分页查询
+     * @param dishPageQueryDTO
+     * @return
+     */
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
+    /**
+     * 批量删除菜单
+     * @param ids
+     */
     void deleteBatch(List<Long> ids);
 
+    /**
+     *  根据id查询菜品信息
+     * @param id
+     * @return
+     */
     DishVO getByIdWithFlavor(Long id);
 
+    /**
+     * 修改菜品
+     * @param dishDTO
+     */
     void updateWithFlavor(DishDTO dishDTO);
 
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
     List<Dish> list(Long categoryId);
+
+    /**
+     * 菜品的起售停售
+     * @param status
+     * @param id
+     */
+    void staruOrStop(Integer status, Long id);
+
 }
