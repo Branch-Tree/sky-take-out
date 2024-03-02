@@ -15,13 +15,6 @@ public interface CategoryService {
     void add(CategoryDTO categoryDTO);
 
     /**
-     * 分页查询
-     * @param categoryPageQueryDTO
-     * @return
-     */
-    PageResult page(CategoryPageQueryDTO categoryPageQueryDTO);
-
-    /**
      * 删除分类
      * @param id
      */
@@ -46,4 +39,11 @@ public interface CategoryService {
      * @return
      */
     List<Category> list(Integer type);
+
+    /**
+     * 分页查询
+     * @param categoryPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(CategoryPageQueryDTO categoryPageQueryDTO);
 }

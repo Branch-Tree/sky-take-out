@@ -53,4 +53,11 @@ public interface CategoryMapper {
      * @return
      */
     List<Category> list(Integer type);
+    /**
+     * 分页查询
+     * @param categoryPageQueryDTO
+     * @return
+     */
+    Page<Category> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO);
+
 }
