@@ -6,6 +6,11 @@ sky:
     database: sky_take_out
     username: root
     password: 64257019aA@
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tQ93iKK8oMzuQrGoRz5
+    access-key-secret: cDLr1POs2F853sydBrzhkMeiB3elay
+    bucket-name: skytak
   redis:
     host: localhost
     port: 6379
