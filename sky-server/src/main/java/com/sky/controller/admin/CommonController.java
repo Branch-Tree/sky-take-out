@@ -14,7 +14,7 @@ import java.nio.channels.MulticastChannel;
  */
 @Slf4j
 @RestController
-@Api("文件上传")
+@Api(tags="文件上传")
 @RequestMapping("/admin/common")
 public class CommonController {
 
