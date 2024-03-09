@@ -157,18 +157,18 @@ public class DishServiceImpl implements DishService {
      * @param id
      */
     public void staruOrStop(Integer status, Long id) {
-        Dish dish=Dish.builder()
+        Dish dish = Dish.builder()
                 .status(status)
                 .id(id)
                 .build();
         dishMapper.update(dish);
-        if(dish.getStatus()==StatusConstant.DISABLE){
-            List<Long> dishIds=new ArrayList<>();
+        if (dish.getStatus() == StatusConstant.DISABLE) {
+            List<Long> dishIds = new ArrayList<>();
             dishIds.add(id);
             List<Long> setmealIdByDishIds = setmealDishMapper.getSetmealIdByDishIds(dishIds);
-            if(setmealIdByDishIds!=null&&setmealIdByDishIds.size()>0){
+            if (setmealIdByDishIds != null && setmealIdByDishIds.size() > 0) {
                 for (Long setmealIdByDishId : setmealIdByDishIds) {
-                    Setmeal setmeal=Setmeal.builder()
+                    Setmeal setmeal = Setmeal.builder()
                             .id(setmealIdByDishId)
                             .status(StatusConstant.DISABLE)
                             .build();
@@ -176,6 +176,30 @@ public class DishServiceImpl implements DishService {
                 }
             }
         }
+    }
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    @Override
+    public List<DishVO> listWithFlavor(Dish dish) {
+        List<Dish> dishList = dishMapper.list(dish);
+
+        List<DishVO> dishVOList = new ArrayList<>();
+
+        for (Dish d : dishList) {
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(d,dishVO);
+
+            //根据菜品id查询对应的口味
+            List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
+
+            dishVO.setFlavors(flavors);
+            dishVOList.add(dishVO);
+        }
+
+        return dishVOList;
     }
 
 
