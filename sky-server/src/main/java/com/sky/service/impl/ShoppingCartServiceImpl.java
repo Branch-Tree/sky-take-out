@@ -10,14 +10,12 @@ import com.sky.mapper.SetmealMapper;
 import com.sky.mapper.ShoppingCartMapping;
 import com.sky.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.SpreadsheetVersion;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -82,5 +80,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .build();
         List<ShoppingCart> list = shoppingCartMapping.list(shoppingCart);
         return list;
+    }
+
+    /**
+     * 清空购物车
+     */
+    public void cleanShoppingCart() {
+        Long userId=BaseContext.getCurrentId();
+        shoppingCartMapping.cleanShoppingCart(userId);
     }
 }
