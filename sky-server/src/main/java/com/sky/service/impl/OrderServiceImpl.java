@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -177,6 +178,25 @@ public class OrderServiceImpl implements OrderService {
         orders1.setCancelTime(LocalDateTime.now());
         orderMapper.update(orders1);
 
+    }
+
+    /**
+     * 再来一单
+     * @param id
+     */
+    public void repetition(Long id) {
+        Long userId=BaseContext.getCurrentId();
+
+        List<OrderDetail> list = orderDetailMapper.getByOrderId(id);
+        List<ShoppingCart> shoppingCarts=new ArrayList<>();
+        for (OrderDetail orderDetail : list) {
+            ShoppingCart shoppingCart=new ShoppingCart();
+            BeanUtils.copyProperties(orderDetail,shoppingCart,"id");
+            shoppingCart.setUserId(userId);
+            shoppingCart.setCreateTime(LocalDateTime.now());
+            shoppingCarts.add(shoppingCart);
+        }
+        shoppingCartMapping.insertBatch(shoppingCarts);
     }
 
 
