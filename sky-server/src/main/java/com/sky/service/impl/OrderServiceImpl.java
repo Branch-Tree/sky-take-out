@@ -149,6 +149,36 @@ public class OrderServiceImpl implements OrderService {
         return orderVO;
     }
 
+    /**
+     * 取消订单
+     * @param id
+     */
+    public void cancelOrder(Long id) {
+        // 根据id查询订单
+        Orders orders=orderMapper.getById(id);
+
+        // 校验订单是否存在
+        if(orders==null){
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        Orders orders1=new Orders();
+        orders1.setId(orders.getId());
+        //订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
+        // 订单处于待接单状态下取消，需要进行退款
+        if(orders.getStatus().equals(Orders.TO_BE_CONFIRMED)){
+            //调用微信支付退款接口
+            //支付状态修改为 退款
+            orders1.setPayStatus(Orders.REFUND);
+        }
+        // 更新订单状态、取消原因、取消时间
+        orders1.setStatus(Orders.CANCELLED);
+        orders1.setCancelReason("用户取消");
+        orders1.setCancelTime(LocalDateTime.now());
+        orderMapper.update(orders1);
+
+    }
+
 
     public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         // 当前登录用户id
