@@ -78,7 +78,7 @@ public class SetmealServiceImpl implements SetmealService {
         ids.forEach(id->{
             Setmeal setmeal = setmealMapper.getById(id);
             if(setmeal.getStatus()== StatusConstant.ENABLE){
-                throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
             }
         });
         ids.forEach(setmealId->{
@@ -119,7 +119,7 @@ public class SetmealServiceImpl implements SetmealService {
         SetmealVO setmealVO=new SetmealVO();
         BeanUtils.copyProperties(setmeal,setmealVO);
         setmealVO.setSetmealDishes(setmealDishes);
-        return null;
+        return setmealVO;
     }
 
     /**
@@ -137,12 +137,13 @@ public class SetmealServiceImpl implements SetmealService {
                     }
                 });
             }
-            Setmeal setmeal=Setmeal.builder()
-                    .status(status)
-                    .id(id)
-                    .build();
-            setmealMapper.update(setmeal);
+
         }
+        Setmeal setmeal=Setmeal.builder()
+                .status(status)
+                .id(id)
+                .build();
+        setmealMapper.update(setmeal);
     }
     /**
      * 条件查询

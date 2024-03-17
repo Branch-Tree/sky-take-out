@@ -52,7 +52,7 @@ public class SetmealController {
     @DeleteMapping
     @ApiOperation("删除套餐")
     @CacheEvict(cacheNames = "setmealCache",allEntries=true)
-    public Result<String> deleteSetmeal(List<Long> ids){
+    public Result<String> deleteSetmeal(@RequestParam List<Long> ids){
         setmealService.deleteSetmeal(ids);
         return Result.success();
     }
