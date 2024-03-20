@@ -197,6 +197,6 @@ public class ReportServiceImpl implements ReportService {
         Map map=new HashMap<>();
         map.put("begin",beginTime);
         map.put("end",endTime);
-        return userMapper.countById(map);
+        return userMapper.countByMap(map);
     }
 }
